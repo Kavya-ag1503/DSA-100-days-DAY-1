@@ -1,34 +1,34 @@
 #include <stdio.h>
 
-int main() {
-    int n, target;
+int maxProfit(int prices[], int n) {
+    int minPrice = prices[0];   // best price to buy
+    int maxProfit = 0;
 
-    // Input number of elements
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    int nums[n];
-
-    // Input array
-    printf("Enter %d numbers: ", n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &nums[i]);
-    }
-
-    // Input target
-    printf("Enter target: ");
-    scanf("%d", &target);
-
-    // Find two sum
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (nums[i] + nums[j] == target) {
-                printf("Output: [%d, %d]\n", i, j);
-                return 0;
-            }
+    for(int i = 1; i < n; i++) {
+        // If today's price is cheaper, update minPrice
+        if(prices[i] < minPrice) {
+            minPrice = prices[i];
+        }
+        // Otherwise calculate profit
+        else if(prices[i] - minPrice > maxProfit) {
+            maxProfit = prices[i] - minPrice;
         }
     }
 
-    printf("No two sum solution found.\n");
+    return maxProfit;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int prices[n];
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &prices[i]);
+    }
+
+    int result = maxProfit(prices, n);
+    printf("%d", result);
+
     return 0;
 }
